@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================ */
+/* AGAM — Global Utilities & Animations        */
+/* ============================================ */
+
+html, body, #root {
+  min-height: 100%;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Screen-reader only ---- */
+.sr-only {
+  position: absolute !important;
+  height: 1px; width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+  border: 0; padding: 0; margin: -1px;
+}
+
+/* ---- Chat Window Legacy Animations ---- */
+.chat-window {
+  border-radius: 16px;
+  padding: 16px;
+  height: 60vh;
+  overflow-y: auto;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chat-message {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  animation: message-appear .3s ease both;
+}
+
+.chat-message.human {
+  align-items: flex-end;
+}
+
+.bubble {
+  display: inline-block;
+  padding: 14px 18px;
+  border-radius: 18px;
+  max-width: 80%;
+  line-height: 1.5;
+  animation: pop-in .3s cubic-bezier(.2,.9,.2,1) both;
+}
+
+.bubble.human {
+  background: #10b981;
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+.bubble.ai {
+  background: #f4fbf7;
+  color: #1a3b2b;
+  border: 1px solid #eef5f1;
+  border-bottom-left-radius: 4px;
+}
+
+/* ---- Custom Scrollbar ---- */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(16, 185, 129, 0.2);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(16, 185, 129, 0.4);
+}
+
+/* ---- Animations ---- */
+@keyframes pop-in {
+  0%   { opacity: 0; transform: scale(.95) translateY(10px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes message-appear {
+  0%   { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
