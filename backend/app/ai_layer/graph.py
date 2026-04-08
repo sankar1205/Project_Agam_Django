@@ -58,7 +58,8 @@ class PatientState(TypedDict):
 def therapeutic_node(state: PatientState):
     tone = state.get("therapist_tone", "neutral and professional")
     sys_instruction = f"You are AGAM clinical support. Tone Directive: {tone}\n\n{GUARDRAILS}"
-    response = llm.invoke([SystemMessage(content=sys_instruction)] + state["messages"])
+    final_messages = [SystemMessage(content=sys_instruction)] + state["messages"] + [SystemMessage(content="REMINDER: " + GUARDRAILS)]
+    response = llm.invoke(final_messages)
     return {"messages": [response]}
 
 
@@ -75,14 +76,16 @@ def worksheet_node(state: PatientState):
         "emit the exact token MODULE_COMPLETE on its own line.\n\n"
         f"{GUARDRAILS}"
     )
-    response = llm.invoke([SystemMessage(content=sys_instruction)] + state["messages"])
+    final_messages = [SystemMessage(content=sys_instruction)] + state["messages"] + [SystemMessage(content="REMINDER: " + GUARDRAILS)]
+    response = llm.invoke(final_messages)
     return {"messages": [response]}
 
 
 def checkin_node(state: PatientState):
     topic = state.get("pending_checkin")
     sys_instruction = f"Therapist Check-in: Ask the user about '{topic}' naturally.\n\n{GUARDRAILS}"
-    response = llm.invoke([SystemMessage(content=sys_instruction)] + state["messages"])
+    final_messages = [SystemMessage(content=sys_instruction)] + state["messages"] + [SystemMessage(content="REMINDER: " + GUARDRAILS)]
+    response = llm.invoke(final_messages)
     # Clear flag so we don't loop
     return {"messages": [response], "pending_checkin": None}
 
