@@ -24,6 +24,7 @@ fsspec==2026.3.0
 gradio_client==2.4.0
 greenlet==3.3.2
 groq==0.37.1
+gunicorn
 h11==0.16.0
 hf-xet==1.4.2
 httpcore==1.0.9
